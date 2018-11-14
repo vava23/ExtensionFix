@@ -17,11 +17,14 @@ namespace ExtensionFix
     /// <summary>
     /// Логика взаимодействия для MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+  public partial class MainWindow : Window
+  {
+    private ExtensionFixer ExtFixer;
+
+    public MainWindow()
     {
-        public MainWindow()
-        {
-            InitializeComponent();
-        }
+      InitializeComponent();
+      ExtFixer = new ExtensionFixer();
     }
+  }
 }
