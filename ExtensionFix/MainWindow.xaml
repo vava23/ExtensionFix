@@ -7,8 +7,8 @@
         mc:Ignorable="d"
         Title="Исправление расширений файлов" Height="300" Width="500" AllowDrop="True">
     <Grid>
-        <Border BorderThickness="2" Margin="5" AllowDrop="True" CornerRadius="10" Grid.ColumnSpan="2" BorderBrush="Gray" ClipToBounds="True">
-            <TextBlock Margin="0" TextWrapping="Wrap" FontSize="24" TextAlignment="Center" Foreground="Gray" HorizontalAlignment="Center" VerticalAlignment="Center" AllowDrop="True"><Run Text="Перетащите файлы в это окн"/><Run Text="о"/></TextBlock>
+        <Border BorderThickness="2" Margin="5" AllowDrop="True" CornerRadius="10" Grid.ColumnSpan="2" BorderBrush="Gray" ClipToBounds="True" Drop="Border_Drop">
+            <TextBlock Margin="0" TextWrapping="Wrap" FontSize="24" TextAlignment="Center" Foreground="Gray" HorizontalAlignment="Center" VerticalAlignment="Center" AllowDrop="True"><Run Text="Перетащите файл в это окн"/><Run Text="о"/></TextBlock>
         </Border>
     </Grid>
 </Window>
