@@ -6,7 +6,7 @@ using System.IO;
 
 namespace ExtensionFix
 {
-  class ExtensionFixer
+  public class ExtensionFixer
   {
     public void Main(String aFileName)
     {
