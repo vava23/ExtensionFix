@@ -44,8 +44,8 @@ namespace ExtensionFix
         // Get the list of files
         string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
         // Process every file
-        int filesFixed = ExtensionFixer.ProcessFiles(files);
-        switch (filesFixed)
+        string[] filesFixed = ExtensionFixer.FixFiles(files);
+        switch (filesFixed.Length)
         {
           case 0:
             userMessage = "Исправление файлов не требуется";

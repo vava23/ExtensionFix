@@ -8,6 +8,11 @@ namespace ExtensionFix
 {
   public class ExtensionFixer
   {
+    // Extensions that can be fixed
+    public static readonly string[] EXT_TO_FIX = { "._docx" };
+    // Correct extensions corresponding to bad ones, in their order
+    public static readonly string[] EXT_CORRECT = { ".docx" };
+
     public void Main(String aFileName)
     {
 
@@ -19,10 +24,14 @@ namespace ExtensionFix
     public static bool IsValidFile(String aStr)
     {
       // Check if its an existing file
-      if(File.Exists(aStr))
+      if (File.Exists(aStr))
       {
-        // TODO
-        return true;
+        // Check if the extension is in our list of extensions to fix
+        string ext = Path.GetExtension(aStr);
+        if (EXT_TO_FIX.Contains(ext)) 
+          return true;
+        else
+          return false;
       }
       return false;
     }
@@ -31,27 +40,36 @@ namespace ExtensionFix
     //
     // Tries to convert file
     //
-    public static bool ProcessFile(string aFileName)
+    public static string FixAFile(string aFileName)
     {
-      return true;
+      if (IsValidFile(aFileName))
+      {
+
+      }
+      return "";
     }
 
     //
     // Tries to convert files in the list
     // Returns number of files converted
     //
-    public static int ProcessFiles(string[] aFiles)
+    public static string[] FixFiles(string[] aFiles)
     {
-      int cnt = 0;
+      // Create a list to populate it with result files
+      List<string> result = new List<string>();
+      string tmpResult;
       foreach (string tmpFile in aFiles)
       {
         if (ExtensionFixer.IsValidFile(tmpFile))
         {
-          if (ExtensionFixer.ProcessFile(tmpFile))
-          { cnt++; }
+          tmpResult = ExtensionFixer.FixAFile(tmpFile);
+          if (tmpResult.Length > 0)
+          {
+            result.Add(tmpResult);
+          }
         }
       }
-      return cnt;
+      return result.ToArray();
     }
   }
 }
