@@ -10,8 +10,9 @@ namespace ExtensionFixTest
   public class ExtensionFixerTest
   {
     private const string PROPER_FILE_1 = "..\\..\\testdata\\ПОВЕСТКА  от 30.11.2017._docx";
-    private const string PROPER_FILE_1_FIXED = "..\\..\\testdata\\ПОВЕСТКА  от 30.11.2017.docx";
-    private const string PROPER_FILE_2 = "..\\..\\testdata\\ПОВЕСТКА  от 30.11.2017._docx";
+    private const string PROPER_FILE_1_FIXED = "..\\..\\testdata\\temp\\ПОВЕСТКА  от 30.11.2017.docx";
+    private const string PROPER_FILE_2 = "..\\..\\testdata\\Новгор.-доп._docx";
+    private const string PROPER_FILE_2_FIXED = "..\\..\\testdata\\temp\\Новгор.-доп.docx";
     private const string HEALTHY_FILE = "..\\..\\testdata\\Wrong File.txt";
 
     private string GetTempDir()
@@ -46,11 +47,14 @@ namespace ExtensionFixTest
       // Try to fix it
       string result = ExtensionFixer.FixAFile(aFile);
       // Check that the file exists
-      Assert.IsTrue(File.Exists(result));
+      if (aExpectedResult != "")
+        Assert.IsTrue(File.Exists(result));
       // Check the result vs expected
       Assert.AreEqual(result, aExpectedResult);
-      // Delete the result file
-      File.Delete(result);
+      // Delete the result file and temp src file
+      if (File.Exists(result))
+        File.Delete(result);
+      File.Delete(aFile);
       return;
     }
 
@@ -82,8 +86,12 @@ namespace ExtensionFixTest
       }
       // Perform the fix
       string[] result = ExtensionFixer.FixFiles(files);
-      // Delete the result files
+      // Delete the result files and temp src files
       foreach (string tmpFile in result)
+      {
+        File.Delete(tmpFile);
+      }
+      foreach (string tmpFile in files)
       {
         File.Delete(tmpFile);
       }

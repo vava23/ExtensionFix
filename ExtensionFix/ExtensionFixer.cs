@@ -44,7 +44,22 @@ namespace ExtensionFix
     {
       if (IsValidFile(aFileName))
       {
-
+        string fileExt = Path.GetExtension(aFileName);
+        for (int i = 0; i < EXT_TO_FIX.Length; i++)
+        {
+          if (fileExt == EXT_TO_FIX[i])
+          {
+            string newFileName = Path.ChangeExtension(aFileName, EXT_CORRECT[i]);
+            // TODO: put a callback with user dialog here!
+            if (!(File.Exists(newFileName)))
+            {
+              File.Move(aFileName, newFileName);
+              return newFileName;
+            }
+            else
+              return "";
+          }
+        }
       }
       return "";
     }
