@@ -40,7 +40,7 @@ namespace ExtensionFix
     //
     // Tries to convert file
     //
-    public static string FixAFile(string aFileName)
+    public static string FixAFile(string aFileName, bool aPreserveSrc = true)
     {
       if (IsValidFile(aFileName))
       {
@@ -53,7 +53,10 @@ namespace ExtensionFix
             // TODO: put a callback with user dialog here!
             if (!(File.Exists(newFileName)))
             {
-              File.Move(aFileName, newFileName);
+              if (aPreserveSrc)
+                File.Copy(aFileName, newFileName);
+              else
+                File.Move(aFileName, newFileName);
               return newFileName;
             }
             else
@@ -68,7 +71,7 @@ namespace ExtensionFix
     // Tries to convert files in the list
     // Returns number of files converted
     //
-    public static string[] FixFiles(string[] aFiles)
+    public static string[] FixFiles(string[] aFiles, bool aPreserveSrc = true)
     {
       // Create a list to populate it with result files
       List<string> result = new List<string>();
@@ -77,7 +80,7 @@ namespace ExtensionFix
       {
         if (ExtensionFixer.IsValidFile(tmpFile))
         {
-          tmpResult = ExtensionFixer.FixAFile(tmpFile);
+          tmpResult = ExtensionFixer.FixAFile(tmpFile, aPreserveSrc);
           if (tmpResult.Length > 0)
           {
             result.Add(tmpResult);

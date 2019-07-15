@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Microsoft.VisualBasic;
 
 namespace ExtensionFix
 {
@@ -40,11 +41,14 @@ namespace ExtensionFix
       // Check if a file was dropped
       if (FileDropped(e))
       {
+
+        bool preserveSrc = (Interaction.InputBox("Сохранить исходные файлы?", this.Title) == "OK");
+        
         string userMessage;
         // Get the list of files
         string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
         // Process every file
-        string[] filesFixed = ExtensionFixer.FixFiles(files);
+        string[] filesFixed = ExtensionFixer.FixFiles(files, preserveSrc);
         switch (filesFixed.Length)
         {
           case 0:
