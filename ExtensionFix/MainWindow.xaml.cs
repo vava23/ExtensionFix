@@ -41,8 +41,20 @@ namespace ExtensionFix
       // Check if a file was dropped
       if (FileDropped(e))
       {
-
-        bool preserveSrc = (Interaction.InputBox("Сохранить исходные файлы?", this.Title) == "OK");
+        // Ask user what to do with source files
+        MsgBoxResult promptRes = Interaction.MsgBox("Сохранить исходные файлы?", MsgBoxStyle.YesNoCancel, this.Title);
+        bool preserveSrc;
+        switch (promptRes)
+        {
+          case MsgBoxResult.Yes:
+            preserveSrc = true;
+            break;
+          case MsgBoxResult.No:
+            preserveSrc = true;
+            break;
+          default:
+            return;
+        }
         
         string userMessage;
         // Get the list of files
