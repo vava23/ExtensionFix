@@ -41,6 +41,22 @@ namespace ExtensionFix
       // Check if a file was dropped
       if (FileDropped(e))
       {
+        // Get the list of input files
+        string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+        // Check the files whether they need to be fixed
+        bool properFiles = true;
+        foreach (string tmpFile in files)
+        {
+          properFiles = (properFiles && ExtensionFixer.IsValidFile(tmpFile));
+        }
+        if (!properFiles)
+        {
+          // If files are OK, notify user and exit
+          // TODO: show the filename for single file input
+          MessageBox.Show(this, "Исправление файлов не требуется");
+          return;
+        }
+
         // Ask user what to do with source files
         MsgBoxResult promptRes = Interaction.MsgBox("Сохранить исходные файлы?", MsgBoxStyle.YesNoCancel, this.Title);
         bool preserveSrc;
@@ -56,11 +72,10 @@ namespace ExtensionFix
             return;
         }
         
-        string userMessage;
-        // Get the list of files
-        string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
         // Process every file
         string[] filesFixed = ExtensionFixer.FixFiles(files, preserveSrc);
+        // Notify user on result
+        string userMessage;
         switch (filesFixed.Length)
         {
           case 0:
@@ -74,7 +89,7 @@ namespace ExtensionFix
             break;
         }
         // Notify user
-        MessageBox.Show(userMessage);
+        MessageBox.Show(this, userMessage);
       }
     }
   }
